@@ -3,9 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// cmd模块使用方法
-import ccPrivateUtils from '@ccprivate/utils/bundle'
-Vue.prototype.$ccPrivateUtils = ccPrivateUtils
+// cjs模块使用方法
+// import ccPrivateUtils from '@ccprivate/utils/bundle'
+// Vue.prototype.$ccPrivateUtils = ccPrivateUtils
 // 然后在单页面vue文件里，用this.$ccPrivateUtils,直接调用就行
 // this.$ccPrivateUtils().format.numberSplitWithComma(12312312321)
 Vue.config.productionTip = false
