@@ -44,10 +44,43 @@ export default {
         }
         console.log(newArr)
       }
+    },
+    reverseNumToString (num) {
+      // 普通方式
+      // var result = ''
+      // for (var i = num.toString().length - 1; i >= 0; i--) {
+      //   result = result + num.toString()[i]
+      // }
+      // console.log('result', result)
+      // console.log('result type', typeof result)
+      // return result
+      // 递归法
+      if (typeof num !== 'number') alert('输入需为int型整数！')
+      if (!Math.floor(num / 10)) return num.toString()
+      return (num % 10).toString() + this.reverseNumToString(Math.floor(num / 10))
     }
+    // test1 () {
+    //   var a = {
+    //     i: 1,
+    //     toString () {
+    //       return a.i++
+    //     }
+    //   }
+    //   var a = {
+    //     arr: [3, 2, 1],
+    //     toString: function () {
+    //       return  this.arr.unshift();
+    //     }
+    //   };
+    //   console.log('a', a)
+    //   if (a == 1 && a == 2 && a == 3) {
+    //     console.log('我被执行啦~')
+    //   }
+    // }
   },
   created () {
     this.toUpper(this.string, this.matchString)
+    console.log('reverse', this.reverseNumToString(12345))
   }
 }
 </script>
