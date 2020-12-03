@@ -69,9 +69,9 @@ export default {
     //   var a = {
     //     arr: [3, 2, 1],
     //     toString: function () {
-    //       return  this.arr.unshift();
+    //       return this.arr.unshift()
     //     }
-    //   };
+    //   }
     //   console.log('a', a)
     //   if (a == 1 && a == 2 && a == 3) {
     //     console.log('我被执行啦~')
@@ -80,6 +80,7 @@ export default {
   },
   created () {
     this.toUpper(this.string, this.matchString)
+    // this.test1()
     console.log('reverse', this.reverseNumToString(12345))
   }
 }

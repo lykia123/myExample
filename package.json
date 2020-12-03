@@ -14,13 +14,13 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "@ccprivate/utils": "0.0.3",
+    "@ccprivate/utils": "0.0.9",
     "echarts": "^4.9.0",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
     "v-charts": "^1.19.0",
     "vue": "^2.6.12",
-    "vue-router": "^3.4.8"
+    "vue-router": "^3.4.9"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -28,9 +28,9 @@
       <div class="border-box">1</div>
     </div>
     <!-- cjs全局注册之后，可以直接使用 -->
-    <!--<div>{{$ccPrivateUtils().format.numberSplitWithComma(number)}}</div>-->
+    <div>{{$ccPrivateUtils.format.numberSplitWithComma(number)}}</div>
     <!-- amd全局注册之后，可以直接使用 -->
-    <div>{{ccPrivateUtils().format.numberSplitWithComma(number)}}</div>
+    <div>{{ccPrivateUtils.format.numberSplitWithComma(number)}}</div>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
       },
       clickCount: 0,
       number: 12123123123,
-      ccPrivateUtils: require('@ccprivate/utils/amd'),
+      ccPrivateUtils: require('@ccprivate/utils/dist/ccUtil.amd'),
       tableData: [
         {
           tagName: 'a',
@@ -115,6 +115,19 @@ export default {
       console.log((result | 0) === result)
       return (result | 0) === result ? result : 0
     },
+    fillNumber (num, len, fill) {
+      let result = []
+      let nums = 1
+      if (typeof num !== 'number') {
+        return num
+      }
+      while (num !== 0) {
+        nums = num % Math.pow(10, len)
+        num = Math.floor(num / Math.pow(10, len))
+        result.unshift(nums)
+      }
+      return result.join(fill)
+    },
     changeToOptions (data, name, id) {
       const a = []
       data.forEach(item => {
@@ -126,11 +139,13 @@ export default {
   created () {
     const a = this.changeToOptions(this.tableData, 'tagName', 'tagId')
     console.log('a', a)
-    console.log(this.ccPrivateUtils().format.numberSplitWithComma(12313123))
-    // console.log(this.$ccPrivateUtils().format.numberSplitWithComma(12312312321))
+    console.log(this.ccPrivateUtils)
+    console.log(this.$ccPrivateUtils)
+    console.log(this.ccPrivateUtils.format.numberSplitWithComma(12313123))
     this.reverse(12300)
     console.log(this.reverse2(Math.pow(2, 30)))
-    // console.log(this.format.numberSplitWithComma(12313123))
+    const b = this.fillNumber(123456789, 3, ',')
+    console.log('b', b)
   }
 }
 </script>
