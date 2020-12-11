@@ -134,6 +134,58 @@ export default {
         a.push({label: item[name], value: item[id]})
       })
       return a
+    },
+    formatDate (time, str) {
+      const date = time ? new Date((typeof time === 'object') && time.constructor === Date ? time : time.replace(/-/g, '/')) : new Date()
+      let fmt = str || 'yyyy/MM/dd hh:mm:ss'
+      if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+      }
+      const hour = date.getHours()
+      let o = {
+        'M+': date.getMonth() + 1,
+        'd+': date.getDate(),
+        'h+': hour,
+        'H+': hour % 12 || 12,
+        't+': hour < 12 ? 'AM' : 'PM',
+        'm+': date.getMinutes(),
+        's+': date.getSeconds(),
+        'fff': date.getMilliseconds()
+      }
+      for (let k in o) {
+        if (new RegExp(`(${k})`).test(fmt)) {
+          let str = o[k] + ''
+          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : str.padStart(k.length, '0'))
+        }
+      }
+      return fmt
+    },
+    uniq (arr, uniq) {
+      // if (isArr(arr)) {
+      //   return arr
+      // }
+      const result = []
+      const uniqResult = []
+      for (let i = 0; i < arr.length; i++) {
+        if (uniq) {
+          if (!uniqResult.includes((arr[i][uniq]))) {
+            uniqResult.push(arr[i][uniq])
+            result.push(arr[i])
+          }
+        } else {
+          if (!result.includes(arr[i])) {
+            result.push(arr[i])
+          }
+        }
+      }
+      return result
+    },
+    //   es6模板字符串
+    stringTemplate () {
+      const name = '小明'
+      const age = 20
+      const message = `你好，${name}，你今年${age}岁了`
+      console.log(message)
     }
   },
   created () {
@@ -146,6 +198,12 @@ export default {
     console.log(this.reverse2(Math.pow(2, 30)))
     const b = this.fillNumber(123456789, 3, ',')
     console.log('b', b)
+    const date = this.formatDate(new Date(), 'yyyy-MM-dd')
+    this.stringTemplate()
+    console.log('data', date)
+    console.log(this.uniq([{id: 1, name: '1'}, {id: 1, name: '1'}, {id: 2, name: '2'}, {id: 2, name: '2'}], 'id'))
+    console.log(this.uniq([{id: 1, name: '1'}, {id: 1, name: '1'}, {id: 2, name: '2'}, {id: 2, name: '2'}], 'id') === [{id: 1, name: '1'}, {id: 2, name: '2'}])
+    console.log((this.uniq([{id: 1, name: '1'}, {id: 1, name: '1'}, {id: 2, name: '2'}, {id: 2, name: '2'}], 'id')).toString() === ([{id: 1, name: '1'}, {id: 2, name: '2'}]).toString())
   }
 }
 </script>
