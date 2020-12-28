@@ -33,7 +33,6 @@ export default {
           //   i++
           //   // newString(stringReduce, matchItem)
           // }
-          console.log(stringReduce)
           newArr = stringReduce
           return stringReduce
         }
@@ -42,7 +41,6 @@ export default {
         } else {
           newString(newArr, matchItem)
         }
-        console.log(newArr)
       }
     },
     reverseNumToString (num) {
@@ -58,6 +56,82 @@ export default {
       if (typeof num !== 'number') alert('输入需为int型整数！')
       if (!Math.floor(num / 10)) return num.toString()
       return (num % 10).toString() + this.reverseNumToString(Math.floor(num / 10))
+    },
+    // 浅拷贝
+    copy (p) {
+      let c = {}
+      for (let i in p) {
+        c[i] = p[i]
+      }
+      return c
+    },
+    // ES6实现浅拷贝的方法 Object.assign({},obj)
+    testCopy () {
+      const a = {key1: '111'}
+      a.key2 = ['你', '我']
+      // const b = this.copy(a)
+      const b = Object.assign({}, a)
+      b.key3 = { num: '333' }
+      console.log('b.key1', b.key1)
+      console.log('b.key3', b.key3)
+      console.log('a.key3', a.key3)
+      b.key2.push('Ta')
+      b.key1 = 23213
+      console.log('a.key2', a.key2)
+      console.log('b.key1', b.key1)
+      console.log('a.key1', a.key1)
+    },
+    arrCopy () {
+      const arr = [1, 2, 3]
+      // 数组浅拷贝 concat()和slice()和...
+      // const b = [].concat(arr)
+      // const b = arr.slice()
+      const b = [...arr]
+      b.push(4)
+      console.log('arr', arr)
+      console.log('b', b)
+    },
+    // 深拷贝:由于属性值类型是数组和对象时，只会引用地址，所以用递归把父对象中所有属于对象的属性类型都遍历赋给子对象即可
+    copyDeep (obj) {
+      let c = {}
+      for (let i in obj) {
+        if (typeof obj[i] === 'object') {
+          c[i] = obj[i].constructor === Array ? [] : {}
+          this.copyDeep(obj[i])
+        } else {
+          c[i] = obj[i]
+        }
+      }
+      return c
+    },
+    testDeepClone () {
+      const a = {key1: '111'}
+      a.key2 = ['你', '我']
+      // const b = this.copy(a)
+      const b = this.copyDeep(a)
+      console.log('deepClone------')
+      b.key3 = { num: '333' }
+      console.log('b.key1', b.key1)
+      console.log('b.key3', b.key3)
+      console.log('a.key3', a.key3)
+      b.key2.push('Ta')
+      b.key1 = 23213
+      console.log('a.key2', a.key2)
+      console.log('b.key1', b.key1)
+      console.log('a.key1', a.key1)
+    },
+    // 算法：有n步台阶，每次只能上1步或者2步，共有多少种走法
+    walkChairs (n) {
+      if (n <= 2) return n
+      let first = 1
+      let second = 2
+      let third = 0
+      for (let i = 3; i <= n; i++) {
+        third = first + second
+        first = second
+        second = third
+      }
+      return third
     }
     // test1 () {
     //   var a = {
@@ -81,6 +155,9 @@ export default {
   created () {
     this.toUpper(this.string, this.matchString)
     // this.test1()
+    this.testCopy()
+    this.arrCopy()
+    this.testDeepClone()
     console.log('reverse', this.reverseNumToString(12345))
   }
 }
