@@ -186,6 +186,33 @@ export default {
       const age = 20
       const message = `你好，${name}，你今年${age}岁了`
       console.log(message)
+    },
+    // 时间差显示
+    dateDiff (hisTime) {
+      if (!hisTime) return ''
+      let result = ''
+      const now = new Date().getTime()
+      const diffValue = now - new Date(hisTime)
+      const minute = 1000 * 60
+      const hour = minute * 60
+      const day = hour * 24
+      // const halfamonth = day * 30
+      const month = day * 30
+      const year = month * 12
+      const _year = diffValue / year
+      const _month = diffValue / month
+      const _week = diffValue / (7 * day)
+      const _day = diffValue / day
+      const _hour = diffValue / hour
+      const _min = diffValue / minute
+      if (_year >= 1) result = parseInt(_year) + '年前'
+      else if (_month >= 1) result = parseInt(_month) + '个月前'
+      else if (_week >= 1) result = parseInt(_week) + '周前'
+      else if (_day >= 1) result = parseInt(_day) + '天前'
+      else if (_hour >= 1) result = parseInt(_hour) + '个小时前'
+      else if (_min >= 1) result = parseInt(_min) + '分钟前'
+      else result = '刚刚'
+      return result
     }
   },
   created () {
@@ -196,14 +223,9 @@ export default {
     console.log(this.ccPrivateUtils.format.numberSplitWithComma(12313123))
     this.reverse(12300)
     console.log(this.reverse2(Math.pow(2, 30)))
-    const b = this.fillNumber(123456789, 3, ',')
-    console.log('b', b)
-    const date = this.formatDate(new Date(), 'yyyy-MM-dd')
     this.stringTemplate()
-    console.log('data', date)
-    console.log(this.uniq([{id: 1, name: '1'}, {id: 1, name: '1'}, {id: 2, name: '2'}, {id: 2, name: '2'}], 'id'))
-    console.log(this.uniq([{id: 1, name: '1'}, {id: 1, name: '1'}, {id: 2, name: '2'}, {id: 2, name: '2'}], 'id') === [{id: 1, name: '1'}, {id: 2, name: '2'}])
-    console.log((this.uniq([{id: 1, name: '1'}, {id: 1, name: '1'}, {id: 2, name: '2'}, {id: 2, name: '2'}], 'id')).toString() === ([{id: 1, name: '1'}, {id: 2, name: '2'}]).toString())
+    const from = this.dateDiff('2020-12-22 11:02:00')
+    console.log('form123', from)
   }
 }
 </script>
