@@ -213,6 +213,22 @@ export default {
       else if (_min >= 1) result = parseInt(_min) + '分钟前'
       else result = '刚刚'
       return result
+    },
+    isJSON (str) {
+      if (typeof str === 'string') {
+        try {
+          var obj = JSON.parse(str)
+          if (typeof obj === 'object' && obj) {
+            return true
+          } else {
+            return false
+          }
+        } catch (e) {
+          console.log('error：' + str + '!!!' + e)
+          return false
+        }
+      }
+      console.log('It is not a string!')
     }
   },
   created () {
@@ -226,6 +242,7 @@ export default {
     this.stringTemplate()
     const from = this.dateDiff('2020-12-22 11:02:00')
     console.log('form123', from)
+    console.log('isJSON', this.isJSON('{"a": "123"}'))
   }
 }
 </script>
